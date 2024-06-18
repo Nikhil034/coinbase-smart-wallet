@@ -7,12 +7,10 @@ import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider, type Locale } from "@rainbow-me/rainbowkit";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { config } from "./wagmi";
 
 const inter = Inter({ subsets: ["latin"] });
-
-
 
 const queryClient = new QueryClient();
 
@@ -21,7 +19,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { locale } = useRouter() as { locale: Locale };
+  const pathname = usePathname();
+
+  // Assuming the locale is the first part of the pathname
+  const locale = pathname.split("/")[1] as Locale;
 
   return (
     <html lang="en">
