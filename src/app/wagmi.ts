@@ -1,16 +1,22 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { Chain, arbitrum, base, mainnet, optimism, polygon, sepolia } from 'wagmi/chains';
+import { http, createConfig } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
+import { coinbaseWallet } from "wagmi/connectors";
 
-export const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
-  projectId: 'c52f63cb512b7b43a8724eae05cb5130',
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+export const config = createConfig({
+  chains: [baseSepolia],
+  connectors: [
+    coinbaseWallet({
+      appName: "Create Wagmi",
+      preference: "smartWalletOnly",
+    }),
   ],
-  ssr: true,
+  transports: {
+    [baseSepolia.id]: http(),
+  },
 });
+
+declare module "wagmi" {
+  interface Register {
+    config: typeof config;
+  }
+}

@@ -6,9 +6,15 @@ import "./globals.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import { RainbowKitProvider, type Locale } from "@rainbow-me/rainbowkit";
+import {
+  RainbowKitProvider,
+  darkTheme,
+  type Locale,
+} from "@rainbow-me/rainbowkit";
 import { usePathname } from "next/navigation";
 import { config } from "./wagmi";
+import { coinbaseWallet } from "@rainbow-me/rainbowkit/wallets";
+// Enable Coinbase Smart Wallet for testing
 
 const inter = Inter({ subsets: ["latin"] });
 
